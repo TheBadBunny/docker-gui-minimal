@@ -1,1 +1,1 @@
-docker exec -it --privileged --user robert --workdir /home/robert $1 $2
+docker exec -it --privileged --user ${USER} --workdir /home/${USER} $1 $2
