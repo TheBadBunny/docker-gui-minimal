@@ -9,9 +9,9 @@ ARG USER=robert
 ARG UID=1000
 ENV container docker	
 RUN apt update && \
-	apt install -y --no-install-recommends apt-utils libterm-readline-gnu-perl sudo apt-utils nano curl software-properties-common && \
-	apt install -y --no-install-recommends terminator nvidia-340 dbus dbus-x11 dbus-user-session gedit dialog && \
-	apt install -y alsa --no-install-recommends libcanberra-gtk3-module libcanberra-gtk-module pulseaudio chromium-browser firefox && \
+	apt install -y --no-install-recommends apt-utils libterm-readline-gnu-perl sudo apt-utils nano curl software-properties-common \
+	python-notify python-keybinder terminator nvidia-340 dbus dbus-x11 dbus-user-session gedit dialog \
+	libcanberra-gtk3-module libcanberra-gtk-module pulseaudio chromium-browser firefox && \
 	find /etc/systemd/system \
         	 /lib/systemd/system \
          	-path '*.wants/*' \
@@ -26,7 +26,8 @@ RUN apt update && \
 	adduser --uid ${UID} --gecos '' --disabled-password ${USER} && \
 	adduser ${USER} sudo && \
 	echo ${USER}' ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/${USER} && \
-	sed -i -e 's/^'${USER}'\:\*\:/'${USER}'\:\:/g' /etc/shadow
+	sed -i -e 's/^'${USER}'\:\*\:/'${USER}'\:\:/g' /etc/shadow && \
+	mkdir -p /home/${USER}/.config/terminator
 
 ##############################
 # Start systemd as process 1 #
